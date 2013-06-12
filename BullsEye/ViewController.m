@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AboutViewController.h"
 
 @interface ViewController ()
 
@@ -37,13 +38,19 @@
     } while ((targetValue % 50) == 0);
 
     self.slider.value = currentValue;
-//    [self updateLabels];
+    [self updateLabels];
+}
+
+-(void)startNewGame {
+    score = 0;
+    round = 0;
+    average = 0;
+    [self startNewRound];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self startNewRound];
-    [self updateLabels];
+    [self startNewGame];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,8 +75,12 @@
     NSString *message = [NSString stringWithFormat:@"You scored %d points: ", points];
     NSString *title;
     if (difference == 0) {
+        score += 100;
         title = @"Perfect!";
     } else if (difference < 5) {
+        if (difference == 1) {
+            score += 50;
+        }
         title = @"Almost!";
     } else if (difference < 10) {
         title = @"Somewhat!";
@@ -88,11 +99,13 @@
 }
 
 -(IBAction)startOver{
-    score = 0;
-    round = 0;
-    average = 0;
-    [self startNewRound];
-    [self updateLabels];
+    [self startNewGame];
+}
+
+-(IBAction)showInfo {
+    AboutViewController *controller = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
+    controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 -(IBAction)sliderMoved:(UISlider *)sender {
@@ -101,7 +114,6 @@
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     [self startNewRound];
-    [self updateLabels];
 }
 
 @end
