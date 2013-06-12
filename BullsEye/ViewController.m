@@ -49,6 +49,20 @@
 }
 
 - (void)viewDidLoad {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
+    
+    UIImage *thumbImageNormal = [UIImage imageNamed:@"SliderThumb-Normal"];
+    [self.slider setThumbImage:thumbImageNormal forState:UIControlStateNormal];
+    
+    UIImage *thumbImageHighlighted = [UIImage imageNamed:@"SliderThumb-Highlighted"];
+    [self.slider setThumbImage:thumbImageHighlighted forState:UIControlStateHighlighted];
+    
+    UIImage *trackLeftImage = [[UIImage imageNamed:@"SliderTrackLeft"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+    [self.slider setMinimumTrackImage:trackLeftImage forState:UIControlStateNormal];
+    
+    UIImage *trackRightImage = [[UIImage imageNamed:@"SliderTrackRight"] stretchableImageWithLeftCapWidth:14 topCapHeight:0];
+    [self.slider setMaximumTrackImage:trackRightImage forState:UIControlStateNormal];
+    
     [super viewDidLoad];
     [self startNewGame];
 }
