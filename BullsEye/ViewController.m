@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "AboutViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ViewController ()
 
@@ -33,9 +34,7 @@
 
 -(void)startNewRound {
     currentValue = 50;
-    do {
-        targetValue = 1 + (arc4random() % 100);
-    } while ((targetValue % 50) == 0);
+    targetValue = 1 + (arc4random() % 100);
 
     self.slider.value = currentValue;
     [self updateLabels];
@@ -113,7 +112,14 @@
 }
 
 -(IBAction)startOver{
+    CATransition *transition = [CATransition animation];
+    transition.type = kCATransitionFade;
+    transition.duration = 1;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    
     [self startNewGame];
+    
+    [self.view.layer addAnimation:transition forKey:nil];
 }
 
 -(IBAction)showInfo {
